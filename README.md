@@ -19,5 +19,5 @@ Data de criação:<br>
 
 Principal mantenedor:<br><br>
 
-<h2>Instalação e uso</h2>
+<h2>Instalação e uso:</h2>
 
