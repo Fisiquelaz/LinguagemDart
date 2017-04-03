@@ -7,7 +7,7 @@ Repositório para o seminário da matéria Programação Orientada a Serviços
 Alunos:
 Anderson Pereira - AndersonPT07 - 20141011110379
 Danilo Miranda - Fisiquelaz - 20141011110360
-Vinicus Malafaya - nick - matricula
+Vinicus Malafaya - malafaya9 - 20141011110280
 ~~~~
 
 ## RESUMO
@@ -31,3 +31,6 @@ Principal mantenedor:
 
 ## Instalação e uso:
 
+~~~~
+Instalação: Acesse este [link](https://www.dartlang.org/install) e baixe o arquivo de acordo com seu SO ou utilize o [DartPad](https://dartpad.dartlang.org/) para desenvolver no chrome
+~~~~
