@@ -31,6 +31,4 @@ Principal mantenedor:
 
 ## Instalação e uso:
 
-~~~~
-Instalação: Acesse este [link](https://www.dartlang.org/install) e baixe o arquivo de acordo com seu SO ou utilize o [DartPad](https://dartpad.dartlang.org/) para desenvolver no chrome
-~~~~
+Instalação: Acesse este [link](https://www.dartlang.org/install "Instalação") e baixe o arquivo de acordo com seu SO ou utilize o [DartPad](https://dartpad.dartlang.org/) para desenvolver no chrome
