@@ -32,4 +32,4 @@ Alunos:
 3. Abra o prompt de comandos e se direcione até o diretório em que o Dart foi instalado
 4. Siga para a pasta "diretorio"/bin, crie um arquivo novoarquivo.dart e insira o código
 5. Para executar o arquivo, insira o comando "dart novoarquivo.dart"
-6. Para compilar, insira "dart2js --out=arquivo.js novoarquivo.dart"
+6. Para compilar para JavaScript, insira "dart2js --out=arquivo.js novoarquivo.dart"
