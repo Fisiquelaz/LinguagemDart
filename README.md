@@ -10,20 +10,30 @@ Alunos:
 
 ## RESUMO
 
-Propósito da linguagem:
+**Propósito da linguagem**:
   - Fornecer uma base sólida de bibliotecas e ferramentas
   - Facilitar as tarefas comuns de programação
   - Seja a solução pragmática e estável para aplicativos reais
 
-Paradigma da linguagem:
+**Observação MINORA**
+A linguagem foi construída para desenvolvimento web, mobile, desktop?
+
+
+**Paradigma da linguagem**:
   - Multiparadigma
 
-Data de criação:
+**Observação MINORA**
+Quais os paradgimas? procedural, orientado a objetos, funcional, etc?
+
+**Data de criação**:
   - Foi lançada na GOTO Conference 2011, que aconteceu de 10 a 11 de outubro de 2011 em Aarhus, na Dinamarca.
 
-Principal mantenedor:
+**Principal mantenedor**:
   - Google
 
 ## Instalação e uso:
 
 Instalação: Acesse este [link](https://www.dartlang.org/install "Instalação") e baixe o arquivo de acordo com seu SO ou utilize o [DartPad](https://dartpad.dartlang.org/) para desenvolver no chrome
+
+**Observação MINORA**
+Descrever a instalação aqui!
