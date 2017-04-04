@@ -17,7 +17,7 @@ Alunos:
   - Ser a solução pragmática e estável para aplicativos reais
 
 **Paradigma da linguagem:**
-  - Multiparadigma
+  - Multiparadigma - funcional e procedural
 
 **Data de criação:**
   - Foi lançada na GOTO Conference 2011, que aconteceu de 10 a 11 de outubro de 2011 em Aarhus, na Dinamarca.
