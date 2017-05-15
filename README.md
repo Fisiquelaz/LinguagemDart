@@ -58,6 +58,8 @@ int year = 1977;
 double antennaDiameter = 3.7;
 ~~~~
 
+
+
 #### Operadores aritméticos, relacionais e lógicos
 Os seguintes operadores são suportados:
 
@@ -81,6 +83,8 @@ if(a / c > b || b * a <= c) {...}
 if(a ~/ b < c && b % a >= c) {...}
 ~~~~
 
+
+
 #### Estruturas de controle condicional
 As seguintes formas de controle condicional são suportadas:
 
@@ -100,15 +104,17 @@ else {print("Insira um valor");}
 a != null ? print(a); : print("Insira um valor");
 ~~~~
 
+
+
 #### Estruturas de repetição
-AS seguintes estruturas de repetição são suportadas:
+As seguintes estruturas de repetição são suportadas:
 
 ~~~~
-for(inicializador; condição; iterador){...} /* O inicializador configura as condições iniciais. O laço é iniciado e só prossegue enquanto a condição for verdadeira, assim que a mesma for falsa, o laço é interrompido. Ao fim de cada iteração, o iterador é acionado*/
+for(inicializador; condição; iterador){...} // O inicializador configura as condições iniciais. O laço é iniciado e só prossegue enquanto a condição for verdadeira, assim que a mesma for falsa, o laço é interrompido. Ao fim de cada iteração, o iterador é acionado
 
 while(condição){...} // Executa um bloco de código enquanto a condição for verdadeira
 
 do{...}
 while(condição)
-/*Executa um bloco de código uma vez, depois verifica a condição. Caso verdadeira, prossegue repetindo o código. Caso falsa, interrompe o laço*/
+//Executa um bloco de código uma vez, depois verifica a condição. Caso verdadeira, prossegue repetindo o código. Caso falsa, interrompe o laço
 ~~~~
