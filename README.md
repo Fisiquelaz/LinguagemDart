@@ -188,3 +188,16 @@ void main() {
 ~~~~
 
 Se tiver uma função que invoca um método com os mesmos argumentos que são passados para ele, não é necessário quebrar manualmente a chamada em um lambda.
+
+## Sintaxe OO
+
+#### Classes
+
+criando uma classe
+
+~~~~
+class Nome_da_classe {
+  int id;
+  ...
+  }
+~~~~
