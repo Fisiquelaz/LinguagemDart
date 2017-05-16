@@ -175,3 +175,16 @@ String s3 = "E essa é ";
 String s4 = "$s3 a forma de interpolar";
 print(s2+s4);
 ~~~~
+
+#### Funções
+Declarando funções
+
+~~~~
+void main() {
+  localFunction() {
+    ...
+  }
+}
+~~~~
+
+Se tiver uma função que invoca um método com os mesmos argumentos que são passados para ele, não é necessário quebrar manualmente a chamada em um lambda.
