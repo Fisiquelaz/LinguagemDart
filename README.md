@@ -118,3 +118,60 @@ do{...}
 while(condição)
 //Executa um bloco de código uma vez, depois verifica a condição. Caso verdadeira, prossegue repetindo o código. Caso falsa, interrompe o laço
 ~~~~
+Exemplos:
+
+~~~~
+for(int i = 0; i<5; i++){print(i);}
+
+var i=0;
+while(i<5)
+{
+  print(i);
+  i++;
+}
+
+var i = 0;
+do
+{
+  print(i);
+  i++;
+}
+while(i<5)
+~~~~
+
+#### Vetores, matrizes e strings
+Declarando vetores, matrizes e strings
+
+~~~~
+var vetor = [1, 2, 3] // As posições são guardadas como [0], [1], [2]. Tambem funciona como lista
+
+List<List<int>> matriz = new List<List<int>>(); // Para cirar uma matriz, cria-se uma lista de listas
+
+String texto = 'texto' // Pode ter o valor atribuido com aspas simples ou duplas
+~~~~
+Exemplos:
+
+~~~~
+var vetor = []
+for(num i = 0; i < 5; i++)
+{
+  vetor.push(i);
+}
+print(vetor);
+
+List<List<int>> matriz = new List<List<int>>();
+  for (var i = 0; i < 10; i++) {
+    List<int> lista = new List<int>();
+    for (var j = 0; j < 10; j++) {
+      lista.add(j);
+    }
+    matriz.add(lista);
+  }
+print(matriz);
+
+String s1 = 'Essa é ';
+String s2 = s1 + 'a forma de concatenar uma string.\n';
+String s3 = "E essa é ";
+String s4 = "$s3 a forma de interpolar";
+print(s2+s4);
+~~~~
