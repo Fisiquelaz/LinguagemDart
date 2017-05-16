@@ -214,6 +214,9 @@ criando uma classe
 ~~~~
 class Nome_da_classe {
   int id;
+  String texto;
+  DateTime data;
+  int inteiro;
   ...
   }
 ~~~~
