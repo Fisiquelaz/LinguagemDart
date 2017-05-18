@@ -49,6 +49,8 @@ var image = {
   'tags': ['saturn'],
   'url': '//path/to/saturn.jpg'
 };
+
+final int constante; //definindo uma constante
 ~~~~
 Variáveis tambem podem ter seu tipo(string, int, etc) definido antes, como:
 
@@ -208,15 +210,74 @@ void main() {
 ## Sintaxe OO
 
 #### Classes
-
-criando uma classe
-
+//Classes
+Objetos
+//Atributos (visibilidade: privado e público, escopo: classe e objeto)
+//Métodos (visibilidade: privado e público, escopo: classe e objeto)
+//Construtores
+//Herança
+Polimorfismo
+Sobrecarga
 ~~~~
-class Nome_da_classe {
-  int id;
-  String texto;
-  DateTime data;
-  int inteiro;
-  ...
+//Classse
+class Spacecraft {
+  String name; //Atributos com visibilidade publica 
+  DateTime launchDate;
+  int launchYear;
+  String _atributoPrivado; //Atributo com visibilidade privada 
+
+  // Construtor, incluindo syntactic sugar para atribuição aos membros.
+  Spacecraft(this.name, this.launchDate) {
+    // Finja que o seguinte é algo que você realmente deseja executar em 
+    // um construtor. 
+    launchYear = launchDate?.year;
   }
+
+  // Construtor nomeado que encaminha para o padrão.
+  Spacecraft.unlaunched(String name) : this(name, null);
+
+  //Método
+  //Para mudar a visibilidade de um método basta apenas colocar um "_" underline
+  void describe() {
+    print('Spacecraft: $name');
+    if (launchDate != null) {
+      int years = new DateTime.now().difference(launchDate).inDays ~/ 365;
+      print('Launched: $launchYear ($years years ago)');
+    } else {
+      print('Unlaunched');
+    }
+  }
+}
 ~~~~
+#### Herança
+~~~~
+class Orbiter extends Spacecraft {
+  num altitude;
+  Orbiter(String name, DateTime launchDate, this.altitude)
+      : super(name, launchDate);
+}
+~~~~
+
+#### Descrever sintaxe básica de exceções:
+Categorias de exeções;
+Captura e lançamento de exceções;
+Criar novas exeções;
+~~~~
+if (astronauts == 0) {
+  throw new StateError('No astronauts.');
+}
+~~~~
+Exceções podem ser detectadas, mesmo em código assíncrono.
+~~~~
+try {
+  for (var object in flybyObjects) {
+    var description = await new File('$object.txt').readAsString();
+    print(description);
+  }
+} on IOException catch (e) {
+  print('Could not describe object: $e');
+} finally {
+  flybyObjects.clear();
+}
+~~~~
+
