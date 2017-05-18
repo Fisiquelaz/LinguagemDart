@@ -210,14 +210,7 @@ void main() {
 ## Sintaxe OO
 
 #### Classes
-//Classes
-Objetos
-//Atributos (visibilidade: privado e público, escopo: classe e objeto)
-//Métodos (visibilidade: privado e público, escopo: classe e objeto)
-//Construtores
-//Herança
-Polimorfismo
-Sobrecarga
+
 ~~~~
 //Classse
 class Spacecraft {
@@ -237,6 +230,9 @@ class Spacecraft {
   Spacecraft.unlaunched(String name) : this(name, null);
 
   //Método
+  void describe(String description){  //Sobrecarga no métoro description
+    print(description); 
+  }
   //Para mudar a visibilidade de um método basta apenas colocar um "_" underline
   void describe() {
     print('Spacecraft: $name');
@@ -258,10 +254,8 @@ class Orbiter extends Spacecraft {
 }
 ~~~~
 
-#### Descrever sintaxe básica de exceções:
-Categorias de exeções;
-Captura e lançamento de exceções;
-Criar novas exeções;
+#### Sintaxe básica de exceções:
+
 ~~~~
 if (astronauts == 0) {
   throw new StateError('No astronauts.');
@@ -280,4 +274,187 @@ try {
   flybyObjects.clear();
 }
 ~~~~
+Criando nova e exceção personalizada
+~~~~
+class CustomException implements Exception {
+  String cause;
+  CustomException(this.cause);
+}
 
+void main() {
+  try {
+    throwException();
+  } on CustomException {
+    print("custom exception is been obtained");
+  }
+}
+
+throwException() {
+  throw new CustomException('This is my first custom exception');
+}
+~~~~
+
+## Sintaxe básica do paradigma da linguagem 
+~~~~
+HTML
+<!DOCTYPE html>
+
+<!--
+  Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
+  for details. All rights reserved. Use of this source code is governed by a
+  BSD-style license that can be found in the COPYING file.
+-->
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>A Simple ToDo List Using HTML5 IndexedDB</title>
+    <link rel="stylesheet" href="todo.css">
+  </head>
+  <body>
+    <input type="text" id="todo" name="todo"
+        placeholder="What do you need to do?">
+    <input type="submit" id="submit" value="Add Todo Item">
+    <ul id="todo-items"></ul>
+    <script type="application/dart" src="todo.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
+~~~~
+CSS
+~~~~
+/*
+  Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
+  for details. All rights reserved. Use of this source code is governed by a
+  BSD-style license that can be found in the COPYING file.
+*/
+
+body {
+  color: #222;
+  font: 14px Arial;
+}
+
+a {
+  color: #3D5C9D;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+li a {
+  margin-left: 8px;
+}
+
+#todo {
+  width: 200px;
+}
+~~~~
+DART
+~~~~
+// Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the COPYING file.
+
+// This is a port of "A Simple ToDo List Using HTML5 IndexedDB" to Dart.
+// See: http://www.html5rocks.com/en/tutorials/indexeddb/todo/
+
+import 'dart:html';
+import 'dart:indexed_db' as idb;
+import 'dart:async';
+
+class TodoList {
+  static final String _TODOS_DB = "todo";
+  static final String _TODOS_STORE = "todos";
+
+  idb.Database _db;
+  int _version = 2;
+  InputElement _input;
+  Element _todoItems;
+
+  TodoList() {
+    _todoItems = querySelector('#todo-items');
+    _input = querySelector('#todo');
+    querySelector('input#submit').onClick.listen((e) => _onAddTodo());
+  }
+
+  Future open() {
+    return window.indexedDB.open(_TODOS_DB, version: _version,
+        onUpgradeNeeded: _onUpgradeNeeded)
+      .then(_onDbOpened)
+      .catchError(_onError);
+  }
+
+  void _onError(e) {
+    // Get the user's attention for the sake of this tutorial. (Of course we
+    // would *never* use window.alert() in real life.)
+    window.alert('Oh no! Something went wrong. See the console for details.');
+    window.console.log('An error occurred: {$e}');
+  }
+
+  void _onDbOpened(idb.Database db) {
+    _db = db;
+    _getAllTodoItems();
+  }
+
+  void _onUpgradeNeeded(idb.VersionChangeEvent e) {
+    idb.Database db = (e.target as idb.OpenDBRequest).result;
+    if (!db.objectStoreNames.contains(_TODOS_STORE)) {
+      db.createObjectStore(_TODOS_STORE, keyPath: 'timeStamp');
+    }
+  }
+
+  void _onAddTodo() {
+    var value = _input.value.trim();
+    if (value.length > 0) {
+      _addTodo(value);
+    }
+    _input.value = '';
+  }
+
+  Future _addTodo(String text) {
+    var trans = _db.transaction(_TODOS_STORE, 'readwrite');
+    var store = trans.objectStore(_TODOS_STORE);
+    return store.put({
+      'text': text,
+      'timeStamp': new DateTime.now().millisecondsSinceEpoch.toString()
+    }).then((_) => _getAllTodoItems())
+    .catchError((e) => _onError);
+  }
+
+  void _deleteTodo(String id) {
+    var trans = _db.transaction(_TODOS_STORE, 'readwrite');
+    var store =  trans.objectStore(_TODOS_STORE);
+    var request = store.delete(id);
+    request.then((e) => _getAllTodoItems(), onError: _onError);
+  }
+
+  void _getAllTodoItems() {
+    _todoItems.nodes.clear();
+
+    var trans = _db.transaction(_TODOS_STORE, 'readwrite');
+    var store = trans.objectStore(_TODOS_STORE);
+
+    // Get everything in the store.
+    var request = store.openCursor(autoAdvance:true).listen((cursor) {
+      _renderTodo(cursor.value);
+    }, onError: _onError);
+  }
+
+  void _renderTodo(Map todoItem) {
+    var textDisplay = new Element.tag('span');
+    textDisplay.text = todoItem['text'];
+
+    var deleteControl = new Element.tag('a');
+    deleteControl.text = '[Delete]';
+    deleteControl.onClick.listen((e) => _deleteTodo(todoItem['timeStamp']));
+
+    var item = new Element.tag('li');
+    item.nodes.add(textDisplay);
+    item.nodes.add(deleteControl);
+    _todoItems.nodes.add(item);
+  }
+}
+
+void main() {
+  new TodoList().open();
+}
+~~~~
