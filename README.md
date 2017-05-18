@@ -253,6 +253,19 @@ class Orbiter extends Spacecraft {
       : super(name, launchDate);
 }
 ~~~~
+#### Instanciando uma classe com o construtor
+~~~~
+var voyager = new Spacecraft('Voyager I', new DateTime(1977, 9, 5));
+voyager.describe();
+
+var voyager3 = new Spacecraft.unlaunched('Voyager III');
+voyager3.describe();
+
+//Polimorfismo
+Spacecraft nave = new Orbiter('Voyager I', new DateTime(1977, 9, 5), 1000);
+  nave.describe();
+
+~~~~
 
 #### Sintaxe básica de exceções:
 
@@ -293,168 +306,119 @@ throwException() {
   throw new CustomException('This is my first custom exception');
 }
 ~~~~
+#### Categorias de exceções
+
+AbstractClassInstantiationError
+ArgumentError
+AssertionError
+CastError
+ConcurrentModificationError
+CyclicInitializationError
+Error
+Exception
+FallThroughError
+FormatException
+IndexError
+IntegerDivisionByZeroException
+NoSuchMethodError
+NullThrownError
+OutOfMemoryError
+RangeError
+StackOverflowError
+StateError
+TypeError
+UnimplementedError
+UnsupportedError
+
 
 ## Sintaxe básica do paradigma da linguagem 
-~~~~
 HTML
-<!DOCTYPE html>
+~~~~
+<!-- Copyright 2015 the Dart project authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license
+     that can be found in the LICENSE file. -->
 
-<!--
-  Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
-  for details. All rights reserved. Use of this source code is governed by a
-  BSD-style license that can be found in the COPYING file.
--->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script -->
 
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>A Simple ToDo List Using HTML5 IndexedDB</title>
-    <link rel="stylesheet" href="todo.css">
-  </head>
-  <body>
-    <input type="text" id="todo" name="todo"
-        placeholder="What do you need to do?">
-    <input type="submit" id="submit" value="Add Todo Item">
-    <ul id="todo-items"></ul>
-    <script type="application/dart" src="todo.dart"></script>
-    <script src="packages/browser/dart.js"></script>
-  </body>
-</html>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+      </a>
+      <p class="navbar-text navbar-right">Bootstrap demo</p>
+    </div>
+  </div>
+</nav>
+
+<div id="main-container" class="container">
+  <div class="row">
+    <div class="alert alert-info" role="alert">
+      <b>Super important</b>
+      alert here!
+    </div>
+  </div>
+  
+  <div class="row">
+    <button class="btn btn-primary" type="submit">Buttons</button>
+    <button class="btn btn-default" type="submit">Are</button>
+    <button class="btn btn-default" type="submit">Fun</button>    
+  </div>
+
+  <div class="row">
+    <nav>
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  
+  <div class="row">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+  </div>
+</div>
+
 ~~~~
 CSS
 ~~~~
-/*
-  Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
-  for details. All rights reserved. Use of this source code is governed by a
-  BSD-style license that can be found in the COPYING file.
-*/
 
-body {
-  color: #222;
-  font: 14px Arial;
+#main-container {
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
-a {
-  color: #3D5C9D;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-li a {
-  margin-left: 8px;
-}
-
-#todo {
-  width: 200px;
-}
 ~~~~
 DART
 ~~~~
-// Copyright (c) 2012, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the COPYING file.
-
-// This is a port of "A Simple ToDo List Using HTML5 IndexedDB" to Dart.
-// See: http://www.html5rocks.com/en/tutorials/indexeddb/todo/
 
 import 'dart:html';
-import 'dart:indexed_db' as idb;
-import 'dart:async';
-
-class TodoList {
-  static final String _TODOS_DB = "todo";
-  static final String _TODOS_STORE = "todos";
-
-  idb.Database _db;
-  int _version = 2;
-  InputElement _input;
-  Element _todoItems;
-
-  TodoList() {
-    _todoItems = querySelector('#todo-items');
-    _input = querySelector('#todo');
-    querySelector('input#submit').onClick.listen((e) => _onAddTodo());
-  }
-
-  Future open() {
-    return window.indexedDB.open(_TODOS_DB, version: _version,
-        onUpgradeNeeded: _onUpgradeNeeded)
-      .then(_onDbOpened)
-      .catchError(_onError);
-  }
-
-  void _onError(e) {
-    // Get the user's attention for the sake of this tutorial. (Of course we
-    // would *never* use window.alert() in real life.)
-    window.alert('Oh no! Something went wrong. See the console for details.');
-    window.console.log('An error occurred: {$e}');
-  }
-
-  void _onDbOpened(idb.Database db) {
-    _db = db;
-    _getAllTodoItems();
-  }
-
-  void _onUpgradeNeeded(idb.VersionChangeEvent e) {
-    idb.Database db = (e.target as idb.OpenDBRequest).result;
-    if (!db.objectStoreNames.contains(_TODOS_STORE)) {
-      db.createObjectStore(_TODOS_STORE, keyPath: 'timeStamp');
-    }
-  }
-
-  void _onAddTodo() {
-    var value = _input.value.trim();
-    if (value.length > 0) {
-      _addTodo(value);
-    }
-    _input.value = '';
-  }
-
-  Future _addTodo(String text) {
-    var trans = _db.transaction(_TODOS_STORE, 'readwrite');
-    var store = trans.objectStore(_TODOS_STORE);
-    return store.put({
-      'text': text,
-      'timeStamp': new DateTime.now().millisecondsSinceEpoch.toString()
-    }).then((_) => _getAllTodoItems())
-    .catchError((e) => _onError);
-  }
-
-  void _deleteTodo(String id) {
-    var trans = _db.transaction(_TODOS_STORE, 'readwrite');
-    var store =  trans.objectStore(_TODOS_STORE);
-    var request = store.delete(id);
-    request.then((e) => _getAllTodoItems(), onError: _onError);
-  }
-
-  void _getAllTodoItems() {
-    _todoItems.nodes.clear();
-
-    var trans = _db.transaction(_TODOS_STORE, 'readwrite');
-    var store = trans.objectStore(_TODOS_STORE);
-
-    // Get everything in the store.
-    var request = store.openCursor(autoAdvance:true).listen((cursor) {
-      _renderTodo(cursor.value);
-    }, onError: _onError);
-  }
-
-  void _renderTodo(Map todoItem) {
-    var textDisplay = new Element.tag('span');
-    textDisplay.text = todoItem['text'];
-
-    var deleteControl = new Element.tag('a');
-    deleteControl.text = '[Delete]';
-    deleteControl.onClick.listen((e) => _deleteTodo(todoItem['timeStamp']));
-
-    var item = new Element.tag('li');
-    item.nodes.add(textDisplay);
-    item.nodes.add(deleteControl);
-    _todoItems.nodes.add(item);
-  }
-}
 
 void main() {
-  new TodoList().open();
+  for (Element e in querySelectorAll('a, button')) {
+    e.onClick.listen((e) => handleClick(e.target));
+  }
 }
+
+void handleClick(var element) {
+  print('[${element.text.trim()}]');
+}
+
 ~~~~
